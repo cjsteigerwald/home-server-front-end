@@ -12,9 +12,21 @@ import { MediaComponent } from './media/media/media.component';
 import { MoviesComponent } from './media/movies/movies/movies.component';
 import { MovieComponent } from './media/movies/movie/movie.component';
 import { HeaderComponent } from './navigation/header/header.component';
+import { GlobalService } from './globals/global.service';
+import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './shared/shared.module';
+import { TestComponent } from './test/test/test.component';
 
 @NgModule({
-  declarations: [AppComponent, WelcomeComponent, MediaComponent, MovieComponent, MoviesComponent, HeaderComponent],
+  declarations: [
+    AppComponent,
+    WelcomeComponent,
+    MediaComponent,
+    MovieComponent,
+    MoviesComponent,
+    HeaderComponent,
+    TestComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -25,8 +37,10 @@ import { HeaderComponent } from './navigation/header/header.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    HttpClientModule,
+    SharedModule,
   ],
-  providers: [],
+  providers: [GlobalService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
