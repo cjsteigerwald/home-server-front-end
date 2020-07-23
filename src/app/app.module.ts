@@ -16,6 +16,7 @@ import { GlobalService } from './globals/global.service';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { TestComponent } from './test/test/test.component';
+import { MovieSearchComponent } from './media/movies/movie-search/movie-search.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { TestComponent } from './test/test/test.component';
     MoviesComponent,
     HeaderComponent,
     TestComponent,
+    MovieSearchComponent,
   ],
   imports: [
     BrowserModule,

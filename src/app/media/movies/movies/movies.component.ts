@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 export class MoviesComponent implements OnInit, OnDestroy {
   movies = new Array<Movie>();
   subscription: Subscription;
+  displayText = false;
 
   constructor(
     private moviesService: MoviesService,

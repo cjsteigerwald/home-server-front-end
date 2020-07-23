@@ -1,0 +1,23 @@
+.container {
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.movie-card {
+  max-width: 300px;
+  margin: 10px 10px;
+}
+
+.movie-search {
+  justify-content: start;
+}
+
+mat-icon {
+  font-size: 25px;
+  color: green;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

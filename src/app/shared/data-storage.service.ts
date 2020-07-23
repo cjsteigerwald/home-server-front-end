@@ -17,6 +17,8 @@ export class DataStorageService {
 
   private APT_POSTER = `${this.movieUrl}/api/movie/lookup/tmdb?tmdbId=109445&apikey=`;
 
+  private API_SEARCH_TITLE = `${this.movieUrl}/api/movie/lookup/tmdb?tmdbId=109445&apikey=`;
+
   constructor(
     private http: HttpClient,
     private moviesService: MoviesService,
@@ -46,10 +48,10 @@ export class DataStorageService {
       tap((movies) => {
         this.moviesService.setMovies(movies);
       })
-    ); 
+    );
   } //fetchMovies()
 
-  fetchPosters(id: string) {
+  fetchPosters(id: number) {
     const url = `${this.movieUrl}/api/movie/lookup/tmdb?tmdbId=${id}&apikey=${this.movieAPIKey}`;
     return this.http.get<Movie>(url).pipe(
       map((movie) => {
@@ -57,4 +59,25 @@ export class DataStorageService {
       })
     );
   }
-}
+
+  async fetchMovieSearch(title: string) {
+    const url = `${this.movieUrl}/api/movie/lookup?term=${title}&apikey=${this.movieAPIKey}`;
+    console.log('In here: ', url);
+
+    this.http
+      .get<Movie[]>(url)
+      .pipe(
+        map((movies) => {
+          return movies.map((movie) => {
+            return {
+              ...movie,
+            };
+          });
+        }),
+        tap((movies) => {
+          this.moviesService.setMovieSearch(movies);
+        })
+      )
+      .subscribe((movies) => {});
+  }
+} //DataStorageService;

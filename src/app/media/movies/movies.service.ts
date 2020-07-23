@@ -11,7 +11,9 @@ import { map } from 'rxjs/operators';
 })
 export class MoviesService {
   moviesChanged = new Subject<Movie[]>();
+  movieSearchChanged = new Subject<Movie[]>();
   private movies: Movie[] = [];
+  private movieSearch: Movie[] = [];
   // private aMovie: Movie;
 
   private movieUrl = this.globalService.getGlobalVars().radarrMovieUrl;
@@ -27,11 +29,18 @@ export class MoviesService {
   ) {}
 
   getMovies() {
-    return this.movies;
+    return this.movies.slice();
   }
 
   setMovies(movies: Movie[]) {
     this.movies = movies;
+    // console.log('In movie setMovies: ', this.movies);
     this.moviesChanged.next(this.movies.slice());
+  }
+
+  setMovieSearch(movieSearch: Movie[]) {    
+    this.movieSearch = movieSearch;
+    // console.log('In movie setMovieSearch: ', this.movieSearch);
+    this.movieSearchChanged.next(this.movieSearch.slice());
   }
 } // MoviesService

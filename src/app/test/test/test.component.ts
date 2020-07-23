@@ -1,8 +1,9 @@
+import { MoviesService } from './../../media/movies/movies.service';
 import { switchMap, map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {fromFetch} from 'rxjs/fetch';
-
+import { fromFetch } from 'rxjs/fetch';
+import { Movie } from 'src/app/media/movies/movie.model';
 
 @Component({
   selector: 'app-test',
@@ -11,23 +12,20 @@ import {fromFetch} from 'rxjs/fetch';
 })
 export class TestComponent implements OnInit {
   users;
-  
-  constructor(private http: HttpClient) {
-  //   this.http.get('http://jsonplaceholder.typicode.com/users').pipe(
-  //     map(response => {
-  //       response.name = 'Hola';
-  //     })
-  //   )
-  //     .subscribe((response) => {
-  //       this.users = response;
-  //       console.log('this.user: ', this.users);
-  //     });
-  }
- 
+  movies = new Array<Movie>();
 
-
+  constructor(private http: HttpClient, private moviesService: MoviesService) {}
   ngOnInit(): void {
-    
-    
+    this.http
+      .get('http://jsonplaceholder.typicode.com/users')
+      .subscribe((response) => {
+        this.users = response;
+      });
+  }
+
+
+
+  onClick(user) {
+    console.log('Clicking Baby: ', user.name);
   }
 }

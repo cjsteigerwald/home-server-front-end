@@ -8,3 +8,31 @@
   max-width: 300px;
   margin: 10px 10px;
 }
+
+.movie-card:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.25);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  
+  
+}
+
+.title {
+  display:none
+}
+
+.movie-card:hover .title {
+  display: block;
+}
+
+.overview {
+  display: none;
+}
+
+.movie-card:hover .overview {
+  display: block;
+}
