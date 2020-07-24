@@ -42,7 +42,6 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
 
   // Take user input and search for movie(s) exist
   doFilter(filterValue) {
-    // console.log(filterValue);
     this.dataStorage.fetchMovieSearch(filterValue);
   }
 

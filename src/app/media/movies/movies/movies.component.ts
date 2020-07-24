@@ -19,13 +19,12 @@ export class MoviesComponent implements OnInit, OnDestroy {
     private dataStorageService: DataStorageService
   ) {}
 
-  ngOnInit(): void {
-    this.dataStorageService.fetchMovies().subscribe();
-    this.subscription = this.moviesService.moviesChanged.subscribe(
-      (movies: Movie[]) => {
-        this.movies = movies;
-      }
-    );
+  ngOnInit(): void {   
+    this.subscription = this.dataStorageService
+      .fetchMovies()
+      .subscribe((resp) => {
+        this.movies = resp;
+      });    
   } // ngOnInit
 
   ngOnDestroy() {

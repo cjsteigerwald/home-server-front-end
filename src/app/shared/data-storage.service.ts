@@ -1,3 +1,4 @@
+import { LocalStorageService } from './local-storage.service';
 import { GlobalService } from './../globals/global.service';
 import { MoviesService } from './../media/movies/movies.service';
 import { Injectable } from '@angular/core';
@@ -24,69 +25,40 @@ export class DataStorageService {
     private globalService: GlobalService
   ) {}
 
-  // fetchMovies() {
-  //   return this.http.get<Movie[]>(this.API_MOVIES).pipe(
-  //     map((movies) => {
-  //       return movies.map((movie) => {
-  //         return {
-  //           ...movie,
-  //         };
-  //       });
-  //     }),
-  //     map((movies) => {
-  //       // movies has internal directory for movie posters in
-  //       // metadata, therefore need to reach out to imdb to get
-  //       // movie posters and add property for posterUrl
-  //       movies.forEach((movie) => {
-  //         this.fetchPosters(movie.tmdbId).subscribe((resp) => {
-  //           movie['posterUrl'] = resp;
-  //         });
-  //       });
-  //       return movies;
-  //     }),
-  //     tap((movies) => {
-  //       this.moviesService.setMovies(movies);
-  //     })
-  //   );
-  // } //fetchMovies()
-
   fetchMovies() {
     return this.http.get<Movie[]>(this.API_MOVIES).pipe(
       map((movies) => {
-        return movies.map((movie) => {
-          return {
-            ...movie,
-          };
-        });
-      }),
-      tap((movies) => {
         const newMovies = [];
         movies.forEach((movie) => {
           this.fetchPosters(movie.tmdbId).subscribe((resp) => {
-            this.moviesService.addMovie(resp);
+            // const aMovie = resp;
+            // this.moviesService.addMovie({...aMovie});
+            // newMovies.push(aMovie);
+            movie.posterUrl = resp;
+            this.moviesService.addMovie(movie);
           });
         });
+        return movies;
       })
     );
   } //fetchMovies()
 
-  // fetchPosters(id: number) {
-  //   const url = `${this.movieUrl}/api/movie/lookup/tmdb?tmdbId=${id}&apikey=${this.movieAPIKey}`;
-  //   return this.http.get<Movie>(url).pipe(
-  //     map((movie) => {
-  //       return movie.images[0].url;
-  //     })
-  //   );
-  // }
-
   fetchPosters(id: number) {
+    const url = `${this.movieUrl}/api/movie/lookup/tmdb?tmdbId=${id}&apikey=${this.movieAPIKey}`;
+    return this.http.get<Movie>(url).pipe(
+      map((movie) => {
+        return movie.images[0].url;
+      })
+    );
+  }
+
+  fetchMovie(id: number) {
     const url = `${this.movieUrl}/api/movie/lookup/tmdb?tmdbId=${id}&apikey=${this.movieAPIKey}`;
     return this.http.get<Movie>(url);
   }
 
   async fetchMovieSearch(title: string) {
     const url = `${this.movieUrl}/api/movie/lookup?term=${title}&apikey=${this.movieAPIKey}`;
-    console.log('In here: ', url);
 
     this.http
       .get<Movie[]>(url)

@@ -18,6 +18,7 @@ export class LocalStorageService {
 
    set(key: string, value: any): boolean {
      if (this.isLocalStorageSupported) {       
+       console.log('localStorage set(): ', JSON.stringify(value))
        this.localStorage.setItem(key, JSON.stringify(value));
        return true;
      }
@@ -26,6 +27,7 @@ export class LocalStorageService {
 
    remove(key: string): boolean {
      if (this.isLocalStorageSupported) {
+       console.log('remove called')
        this.localStorage.removeItem(key);
        return true;
      }

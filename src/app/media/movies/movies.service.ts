@@ -1,3 +1,4 @@
+import { DataStorageService } from './../../shared/data-storage.service';
 import { LocalStorageService } from './../../shared/local-storage.service';
 import { GlobalService } from './../../globals/global.service';
 import { Injectable } from '@angular/core';
@@ -23,45 +24,65 @@ export class MoviesService {
   private APT_POSTER = `${this.movieUrl}/api/movie/lookup/tmdb?tmdbId=109445&apikey=`;
 
   constructor(
-    private httpClient: HttpClient,
     private globalService: GlobalService,
     private localStorageService: LocalStorageService
   ) {}
+
+  // Make call to dataStorageService to download movies
+  // and add them to service with addMovie()
+  // fetchMovies() {
+  //   console.log('After schucks: ')
+  //     resp.forEach(movie => {
+  //       console.log('TypeOf: ', typeof(movie))
+  //       this.addMovie(movie);
+  //     });
+  //   });
+  // }
+
   // return a single movie based on tmdbId
   getMovie(tmdbId: number) {
-    console.log('Storage: ', this.localStorageService.get('movies'));
-    return this.localStorageService.get('movies').find((movie) => movie.tmdbId === tmdbId);
+    return this.movies.find((movie) => movie.tmdbId === tmdbId);
   }
 
   // return all movies in DB
-  getMovies() {    
-    return this.localStorageService.get('movies').slice();
+  getMovies() {
+    return this.movies.slice();
   }
 
-  // set movies in movies[] that are currently in DB
-  setMovies(movies: Movie[]) {   
-    console.log('setMoives(): ', movies)
-    this.movies = movies;    
+  // Due to how radarr stores metadata a GET of
+  // all movies does not include metadata for
+  // poster URL also, adding porterUrl property
+  // to initial Move objects will not allow them
+  // to be JSON.stringify for local storage. Therefore
+  // this method is called by data-storage.service.fetchMovies(),
+  // once complete this is called and array of movies properly
+  // formatted with posterUrl property is sent to local
+  // storage
+  setMovies(movies: Movie[]) {
+    this.movies = movies;
     this.moviesChanged.next(this.movies.slice());
-    this.setLocalStorage(this.movies);
   }
 
   addMovie(movie: Movie) {
     this.movies.push(movie);
-    this.setLocalStorage(this.movies);
     this.moviesChanged.next(this.movies.slice());
   }
 
-  setLocalStorage(movies: Movie[]) {
-    this.localStorageService.remove('movies');
-    this.localStorageService.set('movies', movies );
-    // console.log('Set Movies: ', this.localStorageService.get('movies'));
+  addToLocalStorage(key: string, value: Movie) {
+    this.localStorageService.set(key, value);
+  }
+
+  deleteFromLocalStorage(key: string) {
+    this.localStorageService.remove(key);
+  }
+
+  getFromLocalStorage(key: string) {
+    this.localStorageService.get(key);
   }
 
   // set movies in movieSearch[] that matches user movie search
   setMovieSearch(movieSearch: Movie[]) {
     this.movieSearch = movieSearch;
-    // console.log('In movie setMovieSearch: ', this.movieSearch);
     this.movieSearchChanged.next(this.movieSearch.slice());
   }
 } // MoviesService
