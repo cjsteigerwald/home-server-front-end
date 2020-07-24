@@ -1,0 +1,13 @@
+.container {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-self: center;
+}
+.movie-card {
+  margin: 20px 20px;
+}
+
+.mat-card-image {
+  max-width: 250px;
+}

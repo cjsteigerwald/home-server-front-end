@@ -1,3 +1,4 @@
+import { MoviesService } from './media/movies/movies.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -17,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { TestComponent } from './test/test/test.component';
 import { MovieSearchComponent } from './media/movies/movie-search/movie-search.component';
+import { LocalStorageService } from './shared/local-storage.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,7 @@ import { MovieSearchComponent } from './media/movies/movie-search/movie-search.c
     HttpClientModule,
     SharedModule,
   ],
-  providers: [GlobalService],
+  providers: [GlobalService, MoviesService, LocalStorageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -5,6 +5,6 @@ export interface Movie {
   overview: string;
   imdbId?: string;
   tmdbId?: number;
-  images?: [{ coverType: string; url: string }];
   posterUrl?: string;
+  images?: [{ coverType: string; url: string }];
 }

@@ -40,14 +40,15 @@ export class MovieSearchComponent implements OnInit, OnDestroy {
     );
   }
 
+  // Take user input and search for movie(s) exist
   doFilter(filterValue) {
     // console.log(filterValue);
     this.dataStorage.fetchMovieSearch(filterValue);
   }
 
+  // Check if movie exists in db
   checkIfMovieExists(tmdbId: number) {
     if (this.movies.length > 0) {
-      console.log('Found: ', this.movieExistsDB);
       return this.movies.find((movie) => movie.tmdbId === tmdbId)
         ? true
         : false;

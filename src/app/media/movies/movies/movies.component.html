@@ -1,16 +1,22 @@
 <div class="container" fxLayout>
   <mat-card class="movie-card" *ngFor="let movie of movies">
     <mat-card-header>
-      <mat-card-title class="title" >{{ movie.title }}</mat-card-title>
+      <mat-card-title class="title">{{ movie.title }}</mat-card-title>
       <mat-card-subtitle class="title">{{ movie.year }}</mat-card-subtitle>
     </mat-card-header>
     <img
       mat-card-image
-      src="{{ movie.posterUrl }}"
+      src="{{ movie.images[0].url }}"
       onerror="if (this.src != 'error.jpg') this.src ='../../../assets/images/funny-wet-cats-coverimage.jpg';"
     />
-    <mat-card-content>
+    <!-- <mat-card-content>
       <p class="overview">{{ movie.overview }}</p>
-    </mat-card-content>
+    </mat-card-content> -->
+    <mat-card-actions>
+      <a mat-button routerLink="{{ movie.tmdbId }}" class="details">
+        DETAILS
+      </a>
+      <!-- <button mat-button routerLink="movies/{{ movie.tmdbId }}">DETAILS</button> -->
+    </mat-card-actions>
   </mat-card>
 </div>
